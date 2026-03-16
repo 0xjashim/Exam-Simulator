@@ -1,6 +1,6 @@
-# EC-Council Exam Simulator
+# Exam Simulator
 
-> Practice tool for EC-Council certifications — built on Jekyll Minima dark theme.
+> Practice tool for certifications — built on Jekyll Minima dark theme.
 
 **🔗 Live:** https://0xjashim.github.io/Exam-Simulator
 
