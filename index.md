@@ -1,6 +1,6 @@
 ---
 layout: home
-title: EC-Council Exam Simulator
+title: Exam Simulator
 ---
 
 <div class="stat-row">
