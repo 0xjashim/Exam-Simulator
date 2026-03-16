@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page.title }} | EXAM://SIMULATOR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #00ff41;
+    --green2: #00cc33;
+    --green-dim: #00ff4122;
+    --green-mid: #00ff4166;
+    --bg: #000000;
+    --bg2: #010a01;
+    --bg3: #011201;
+    --surface: #050f05;
+    --surface2: #0a1a0a;
+    --border: #00ff4133;
+    --border2: #00ff4166;
+    --text: #00ff41;
+    --text-dim: #00cc3399;
+    --red: #ff0040;
+    --amber: #ffb300;
+    --cyan: #00ffff;
+    --font-mono: 'Share Tech Mono', monospace;
+    --font-display: 'Orbitron', monospace;
+    --font-crt: 'VT323', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* CRT scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Ambient glow */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(0,255,65,0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAVBAR ─────────────────────────────────── */
+  .navbar {
+    border-bottom: 1px solid var(--border2);
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(4px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 0 2rem;
+  }
+  .navbar-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--green);
+    letter-spacing: 2px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-logo .bracket { color: var(--green-mid); }
+  .nav-logo .blink { animation: blink 1.2s step-end infinite; }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+    font-family: var(--font-mono);
+  }
+  .nav-links a:hover { color: var(--green); }
+  .nav-links a.active { color: var(--green); border-bottom: 1px solid var(--green); padding-bottom: 2px; }
+  .nav-badge {
+    font-size: 10px;
+    background: var(--green-dim);
+    border: 1px solid var(--border2);
+    color: var(--green);
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+  }
+
+  /* ── HERO ───────────────────────────────────── */
+  .hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    color: var(--green-mid);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    font-family: var(--font-mono);
+  }
+  .hero-eyebrow::before { content: '> '; color: var(--green); }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--green);
+    margin-bottom: 1.2rem;
+    text-shadow: 0 0 30px rgba(0,255,65,0.3);
+    letter-spacing: 2px;
+  }
+  .hero-title .dim { color: var(--green-mid); }
+  .hero-sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+  .stat {
+    border-left: 2px solid var(--green);
+    padding-left: 12px;
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1;
+  }
+  .stat-lbl { font-size: 11px; color: var(--text-dim); letter-spacing: 1px; margin-top: 3px; }
+
+  /* ── TERMINAL BLOCK ─────────────────────────── */
+  .terminal {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .terminal-bar {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .terminal-dot.r { background: #ff5f56; }
+  .terminal-dot.y { background: #ffbd2e; }
+  .terminal-dot.g { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .terminal-body { padding: 1.2rem 1.4rem; font-size: 13px; line-height: 2; }
+  .terminal-body .prompt { color: var(--green); }
+  .terminal-body .cmd { color: #fff; }
+  .terminal-body .out { color: var(--text-dim); padding-left: 1rem; }
+  .terminal-body .ok { color: var(--green); }
+  .terminal-body .warn { color: var(--amber); }
+
+  /* ── FEATURE GRID ───────────────────────────── */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 2rem 3rem;
+    position: relative;
+    z-index: 1;
+  }
+  .section-header {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--green-mid);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.4rem;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .feature-card:hover { border-color: var(--border2); background: var(--bg3); }
+  .feature-card:hover::before { opacity: 1; }
+  .feature-icon { font-size: 1.4rem; margin-bottom: 0.8rem; }
+  .feature-title { font-family: var(--font-display); font-size: 12px; font-weight: 700; color: var(--green); letter-spacing: 1px; margin-bottom: 0.5rem; }
+  .feature-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
+  /* ── SIMULATOR EMBED ────────────────────────── */
+  .sim-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+  .sim-wrap {
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(0,255,65,0.06), 0 0 120px rgba(0,255,65,0.03);
+  }
+  .sim-titlebar {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border2);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+  .sim-titlebar-left { display: flex; align-items: center; gap: 10px; }
+  .sim-titlebar-dots { display: flex; gap: 6px; }
+  .sim-titlebar-dots span { width: 10px; height: 10px; border-radius: 50%; }
+  .sim-titlebar-name { color: var(--text-dim); letter-spacing: 1px; font-family: var(--font-mono); }
+  .sim-titlebar-status { color: var(--green); font-size: 11px; letter-spacing: 1px; }
+  .sim-titlebar-status::before { content: '● '; animation: blink 2s step-end infinite; }
+
+  /* ── FOOTER ─────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-dim);
+    position: relative;
+    z-index: 1;
+    letter-spacing: 1px;
+    line-height: 2;
+  }
+  footer a { color: var(--green); text-decoration: none; }
+  footer .author { color: var(--green); font-weight: bold; }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  @keyframes scanline {
+    0% { top: -10%; }
+    100% { top: 110%; }
+  }
+
+  /* Glitch text effect on title */
+  .glitch {
+    position: relative;
+  }
+  .glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+  }
+  .glitch::before {
+    color: #00ffff;
+    animation: glitch1 4s infinite;
+    clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+    opacity: 0.6;
+  }
+  .glitch::after {
+    color: #ff0040;
+    animation: glitch2 4s infinite;
+    clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+    opacity: 0.6;
+  }
+  @keyframes glitch1 {
+    0%,90%,100%{transform:translate(0)} 92%{transform:translate(-3px,1px)} 94%{transform:translate(2px,-1px)} 96%{transform:translate(-1px,0)}
+  }
+  @keyframes glitch2 {
+    0%,90%,100%{transform:translate(0)} 93%{transform:translate(3px,-1px)} 95%{transform:translate(-2px,1px)} 97%{transform:translate(1px,0)}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="nav-logo" href="{{ site.baseurl }}/">
+      <span class="bracket">[</span>EXAM<span style="color:#fff">::</span>SIM<span class="bracket">]</span>
+      <span class="blink">_</span>
+    </a>
+    <div class="nav-links">
+      <a href="{{ site.baseurl }}/" class="active">HOME</a>
+      <a href="{{ site.baseurl }}/simulator">SIMULATOR</a>
+      <a href="https://github.com/0xjashim/exam-simulator" target="_blank">GITHUB</a>
+      <span class="nav-badge">v2.0</span>
+    </div>
+  </div>
+</nav>
+
+{{ content }}
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <span class="author">Jashim Uddin Bhuiyan</span> &nbsp;·&nbsp;
+    Powered by <span style="color:var(--cyan)">Claude AI</span> &nbsp;·&nbsp;
+    <a href="https://github.com/0xjashim/exam-simulator" target="_blank">GitHub</a>
+  </div>
+  <div style="margin-top:6px;color:#00ff4144">
+    &copy; {{ 'now' | date: "%Y" }} · For personal study use only · No data is collected or stored
+  </div>
+</footer>
+
+</body>
+</html>

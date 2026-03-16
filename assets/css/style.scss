@@ -1,0 +1,134 @@
+---
+---
+
+// Custom overrides on top of Minima dark skin
+// Minima handles the base styles via the theme gem
+
+.simulator-wrap {
+  background: #050f05;
+  border: 1px solid #00ff4133;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 2rem 0;
+  box-shadow: 0 0 40px rgba(0,255,65,0.05);
+}
+
+.simulator-titlebar {
+  background: #0a1a0a;
+  border-bottom: 1px solid #00ff4133;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  color: #4a7a4a;
+}
+
+.sim-dots { display: flex; gap: 6px; align-items: center; }
+.sim-dot { width: 10px; height: 10px; border-radius: 50%; }
+.sim-dot.r { background: #ff5f56; }
+.sim-dot.y { background: #ffbd2e; }
+.sim-dot.g { background: #28ca41; box-shadow: 0 0 5px #28ca41; }
+
+.sim-status {
+  color: #00ff41;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+.sim-status::before { content: "● "; animation: blink 2s step-end infinite; }
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 1.5rem 0;
+}
+
+.feature-card {
+  background: #050f05;
+  border: 1px solid #00ff4122;
+  border-radius: 6px;
+  padding: 1.2rem;
+  transition: border-color 0.2s;
+}
+.feature-card:hover { border-color: #00ff4166; }
+.feature-card h3 { font-size: 13px; color: #00ff41; margin: 0.5rem 0 0.3rem; }
+.feature-card p { font-size: 13px; color: #888; margin: 0; line-height: 1.6; }
+.feature-card .icon { font-size: 1.4rem; }
+
+.terminal {
+  background: #050f05;
+  border: 1px solid #00ff4133;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+  overflow: hidden;
+}
+
+.terminal-bar {
+  background: #0a1a0a;
+  border-bottom: 1px solid #00ff4122;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #4a7a4a;
+  font-family: 'Courier New', monospace;
+}
+
+.terminal-body {
+  padding: 1rem 1.2rem;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 2;
+}
+.terminal-body .prompt { color: #00ff41; }
+.terminal-body .cmd { color: #fff; }
+.terminal-body .out { color: #4a7a4a; padding-left: 1rem; }
+.terminal-body .ok { color: #00ff41; }
+.terminal-body .warn { color: #ffb300; }
+.terminal-body .blink { animation: blink 1.2s step-end infinite; }
+
+.launch-btn {
+  display: inline-block;
+  background: #00ff41;
+  color: #000 !important;
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+  padding: 0.75rem 2rem;
+  border-radius: 4px;
+  text-decoration: none !important;
+  transition: opacity 0.15s;
+  margin-right: 10px;
+}
+.launch-btn:hover { opacity: 0.85; }
+
+.ghost-btn {
+  display: inline-block;
+  background: transparent;
+  color: #00ff41 !important;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none !important;
+  border: 1px solid #00ff4144;
+  transition: all 0.15s;
+}
+.ghost-btn:hover { border-color: #00ff41; }
+
+.stat-row {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+}
+.stat { border-left: 2px solid #00ff41; padding-left: 12px; }
+.stat .num { font-size: 1.8rem; font-weight: 700; color: #00ff41; line-height: 1; }
+.stat .lbl { font-size: 11px; color: #4a7a4a; letter-spacing: 1px; margin-top: 2px; }

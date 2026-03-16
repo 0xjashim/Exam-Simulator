@@ -1,0 +1,24 @@
+title: "EC-Council Exam Simulator"
+description: "Practice tool for EC-Council certifications — ECIHv3, CEH and more"
+author: "Jashim Uddin Bhuiyan"
+email: jashimcmt@gmail.com
+
+baseurl: "/Exam-Simulator"
+url: "https://0xjashim.github.io"
+
+twitter_username: 0xJ4shim
+github_username: 0xjashim
+linkedin_username: jashim
+
+theme: minima
+
+minima:
+  skin: dark
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+exclude:
+  - Gemfile.lock
+  - node_modules
