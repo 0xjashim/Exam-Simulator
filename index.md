@@ -4,10 +4,6 @@ title: Exam Simulator
 ---
 
 <div class="stat-row">
-  <div class="stat"><div class="num">198</div><div class="lbl">ECIHv3 Questions</div></div>
-  <div class="stat"><div class="num">100%</div><div class="lbl">Offline</div></div>
-  <div class="stat"><div class="num">0</div><div class="lbl">Data Collected</div></div>
-  <div class="stat"><div class="num">70%</div><div class="lbl">Pass Threshold</div></div>
 </div>
 
 <div class="terminal">
@@ -21,13 +17,7 @@ title: Exam Simulator
   </div>
   <div class="terminal-body">
     <div><span class="prompt">0xjashim@exam:~$</span> <span class="cmd">./simulator --load ECIHv3.txt</span></div>
-    <div class="out ok">✔ Loaded 198 questions from ECIHv3.txt</div>
-    <div class="out ok">✔ Answer keys detected via bold markup</div>
-    <div class="out warn">⚠ Shuffle mode: OFF — use checkbox to enable</div>
-    <div class="out ok">✔ Session engine ready</div>
-    <div><span class="prompt">0xjashim@exam:~$</span> <span class="cmd">./simulator --start</span></div>
-    <div class="out ok">✔ Launching... Good luck!</div>
-    <div><span class="prompt">0xjashim@exam:~$</span> <span class="blink">_</span></div>
+     <div><span class="prompt">0xjashim@exam:~$</span> <span class="blink">_</span></div>
   </div>
 </div>
 
